@@ -1,0 +1,32 @@
+version: 1
+# KSR_Profile — Amplify Gen 2 fullstack spec (same layout as agent-maker-checker).
+#
+# Connect THIS repo (KSR_Profile root) as the Amplify app — not RazorPay/agent-maker-checker.
+# GitHub remote MUST be github.com/KandanathiSainathReddy/... (private). Never CloudMorphAI.
+#   backend  — ampx pipeline-deploy (minimal Gen 2 backend, writes amplify_outputs.json)
+#   frontend — Vite personal site
+backend:
+  phases:
+    build:
+      commands:
+        - npm ci
+        - npx ampx pipeline-deploy --branch $AWS_BRANCH --app-id $AWS_APP_ID
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - '[ -d node_modules ] || npm ci'
+    build:
+      commands:
+        - npm run build:site
+        - |
+          if [ -f amplify_outputs.json ]; then
+            cp amplify_outputs.json apps/site/dist/amplify_outputs.json
+          fi
+  artifacts:
+    baseDirectory: apps/site/dist
+    files:
+      - "**/*"
+  cache:
+    paths:
+      - node_modules/**/*

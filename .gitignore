@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.amplify/
+amplify_outputs.json
+.env
+.env.*
+!.env.example
+*.local
+.DS_Store
+Thumbs.db
+CONTEXT.md
+AGENTS.md
