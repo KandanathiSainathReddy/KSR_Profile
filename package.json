@@ -22,5 +22,8 @@
     "esbuild": "^0.28.1",
     "tsx": "^4.23.0",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "@opentelemetry/core": "2.11.0"
   }
 }
