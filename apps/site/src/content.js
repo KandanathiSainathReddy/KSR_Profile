@@ -17,6 +17,7 @@ export const site = {
 
   nav: [
     { href: "#explore", label: "Explore" },
+    { href: "notes.html", label: "Projects" },
     { href: "#work", label: "Work" },
     { href: "#approach", label: "Approach" },
     { href: "#certs", label: "Certs" },
@@ -59,10 +60,12 @@ export const site = {
       },
       {
         title: "This work page",
-        kind: "Source",
-        live: false,
-        blurb: "This site’s source on GitHub. Hosted URL comes after Amplify is connected — not a second product, the index of the work.",
+        kind: "Live",
+        live: true,
+        blurb: "This site — the public index. Projects (what I built, tools, two walkthroughs first) is a separate page. Hosted on Amplify Gen 2.",
         links: [
+          { href: "https://main.d2ak3mw598e3nx.amplifyapp.com/", label: "Live page →" },
+          { href: "https://main.d2ak3mw598e3nx.amplifyapp.com/notes.html", label: "Projects →" },
           { href: "https://github.com/KandanathiSainathReddy/KSR_Profile", label: "GitHub ↗" },
         ],
       },
@@ -70,15 +73,20 @@ export const site = {
         title: "Multi-cloud platform",
         kind: "In progress",
         live: false,
-        blurb: "Personal FinOps + MCP control plane + RAG over repos. Solo skills project. No public demo yet — not a second employer.",
-        links: [],
+        blurb: "Normalize AWS / GCP / Azure spend, forecast, remediations. MCP + RAG. Solo, in progress, no public URL. Deep dive on Projects.",
+        links: [{ href: "notes.html#multicloud", label: "Deep dive →" }],
       },
       {
-        title: "Telus International",
+        title: "Telus — three separate deliveries",
         kind: "Employment",
         live: false,
-        blurb: "Pico 4 POC, serverless video pipelines, n8n agents, $1.2M/year savings. Production at work — no public deploy.",
-        links: [],
+        blurb:
+          "Not one blob. Recruited to build one serverless pipeline (~3 months, $1.2M/year). Later more cost-saving changes. This year: Pico robotics — APKs, video pipeline, websites — plus one client visit in the Philippines. n8n battle cards. Deep dives on Projects.",
+        links: [
+          { href: "notes.html#pico", label: "Pico robotics →" },
+          { href: "notes.html#video-pipeline", label: "Video pipeline →" },
+          { href: "notes.html#n8n", label: "n8n →" },
+        ],
       },
       {
         title: "Ellucian",
@@ -92,7 +100,7 @@ export const site = {
 
   stats: [
     { value: "~5.5 yrs", label: "Python-first engineering, CKA" },
-    { value: "$1.2M/yr", label: "Cloud savings — serverless pipelines" },
+    { value: "$1.2M/yr", label: "Cloud savings — one Telus pipeline" },
     { value: "93%", label: "15-person process → one operator" },
     { value: "200+", label: "Higher-ed clients at Ellucian" },
   ],
@@ -100,9 +108,9 @@ export const site = {
   featured: {
     kicker: "FEATURED — LIVE",
     title: "Agent maker-checker",
-    subtitle: "Spend-control architecture for AI agents that call Razorpay",
+    subtitle: "Spend-control architecture for Razorpay MCP payment tools",
     blurb:
-      "A spend-control plane in front of Razorpay MCP: every agent tool call is intercepted and evaluated against payments-semantic policies before execution — allow / deny / escalate-to-human. Caps, velocity / structuring, payee allowlist, refund-to-capture, prompt-injection provenance. Hash-chained audit and a HITL queue. Shipped serverless: container Lambdas + DynamoDB on Amplify Gen 2, idle near zero. Test-mode only — no real money.",
+      "A spend-control plane in front of Razorpay MCP: each Razorpay payment-tool call is intercepted and evaluated against payments-semantic policies before execution — allow / deny / escalate-to-human. Caps, velocity / structuring, payee allowlist, refund-to-capture, prompt-injection provenance. Hash-chained audit and a HITL queue. Shipped serverless: container Lambdas + DynamoDB on Amplify Gen 2, idle near zero. Console is a cached policy testbed by default; live MCP is opt-in. Test-mode only — no real money.",
     flow: ["Nova agent", "Enforcement proxy", "Razorpay MCP", "Test-mode APIs"],
     policies: [
       "Per-call rupee cap",
@@ -111,11 +119,12 @@ export const site = {
       "Refund-to-capture ratio",
       "Prompt-injection provenance",
     ],
-    note: "Deterministic YAML policies — spend-control is architecture, not a prompt. Nova drafts guardrails; a human Applies. Nova never evaluates a payment. Test-mode only — no real money.",
+    note: "Deterministic YAML policies — spend-control is architecture, not a prompt. Nova drafts guardrails; a human Applies. Nova never evaluates a payment. Console defaults to cached scenarios so you can press attacks without minting rzp.io test links; live MCP is a toggle, not the public default. Test-mode only — no real money.",
     stack: "Python · FastAPI · Amazon Nova · Razorpay MCP · Amplify Gen 2 · container Lambdas · DynamoDB · Vite",
     links: [
       { href: liveDemo, label: "Live demo →", kind: "solid" },
       { href: githubRepo, label: "GitHub ↗", kind: "text" },
+      { href: "notes.html#maker-checker", label: "Deep dive →", kind: "text" },
     ],
   },
 
@@ -134,7 +143,7 @@ export const site = {
       pill: "Employment",
       live: false,
       blurb:
-        "Current role. Pico 4 VR POC: egocentric capture, two Android APKs and websites (Claude Code + Cursor), performance historian (battery, FPS, GPU, CPU frequency). Trigger-based serverless video processing on AWS Step Functions so compute runs on events, not idle GPU. Vendor / PM / client product workflow. n8n agentic workflow with persistent memory. Serverless pipeline S3 → EventBridge → Lambda → Step Functions → Batch. ~$1.2M/year cloud savings; 15-person process → one operator.",
+        "Current role. Recruited to build one serverless pipeline (S3 → EventBridge → Lambda → Step Functions → Batch) — about three months to ship and fix; $1.2M/year from that pipeline; 15-person process → one operator. Later I kept making cost-saving changes. This year: Pico robotics — two Android APKs, capture video pipeline, websites (Claude Code + Cursor), performance historian (battery, FPS, GPU, CPU frequency), and one on-site client visit in the Philippines. n8n agentic workflow with persistent memory.",
       stack: "Python · React · Android / Pico 4 · Serverless · Step Functions · EventBridge · Lambda · n8n · EKS",
       links: [],
     },

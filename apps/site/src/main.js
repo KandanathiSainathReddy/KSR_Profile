@@ -1,4 +1,5 @@
 import { site } from "./content.js";
+import { writeup } from "./writeup.js";
 
 /* ── helpers ─────────────────────────────────────────────────────────────── */
 
@@ -97,7 +98,11 @@ fill(
       const actions =
         item.links && item.links.length
           ? `<div class="actions">${item.links
-              .map((l) => extLink(l.href, esc(l.label), "btn btn-text"))
+              .map((l) =>
+                /^https?:/i.test(l.href)
+                  ? extLink(l.href, esc(l.label), "btn btn-text")
+                  : `<a href="${l.href}" class="btn btn-text">${esc(l.label)}</a>`,
+              )
               .join("")}</div>`
           : "";
       return (
@@ -129,37 +134,47 @@ fill(
     `<p class="stack">${esc(f.stack)}</p>` +
     `<div class="actions">` +
     f.links
-      .map((l) => extLink(l.href, esc(l.label), `btn btn-${l.kind || "solid"}`))
+      .map((l) =>
+        /^https?:/i.test(l.href)
+          ? extLink(l.href, esc(l.label), `btn btn-${l.kind || "solid"}`)
+          : `<a href="${l.href}" class="btn btn-${l.kind || "solid"}">${esc(l.label)}</a>`,
+      )
       .join("") +
     `</div>`,
 );
 
-/* ── work grid ───────────────────────────────────────────────────────────── */
+/* ── project catalog (click → notes deep dive) ───────────────────────────── */
+
+const workLede = document.getElementById("work-lede");
+if (workLede) workLede.textContent = writeup.lede;
+
+const cardHtml = (p) => {
+  const pillClass = `pill${p.live ? " live" : ""}`;
+  const cardClass = p.startHere ? "project-card start-here" : "project-card supporting";
+  const badge = p.startHere ? `<span class="start-badge">Start here</span>` : "";
+  return (
+    `<a class="${cardClass}" href="notes.html#${p.id}">` +
+    `<header class="work-head">` +
+    `<h3>${esc(p.title)}</h3>` +
+    `<span class="${pillClass}">${esc(p.pill)}</span>` +
+    `</header>` +
+    badge +
+    `<p>${esc(p.summary)}</p>` +
+    `<p class="stack">${esc(p.stack)}</p>` +
+    `<span class="project-go">Deep dive →</span>` +
+    `</a>`
+  );
+};
+
+const featured = writeup.projects.filter((p) => p.startHere);
+const rest = writeup.projects.filter((p) => !p.startHere);
 
 fill(
   "work-grid",
-  site.work
-    .map((w) => {
-      const pillClass = `pill${w.live ? " live" : ""}`;
-      const actions =
-        w.links && w.links.length
-          ? `<div class="actions">${w.links
-              .map((l) => extLink(l.href, esc(l.label), "btn btn-text"))
-              .join("")}</div>`
-          : "";
-      return (
-        `<article class="work-card">` +
-        `<header class="work-head">` +
-        `<h3>${esc(w.title)}</h3>` +
-        `<span class="${pillClass}">${esc(w.pill)}</span>` +
-        `</header>` +
-        `<p>${esc(w.blurb)}</p>` +
-        `<p class="stack">${esc(w.stack)}</p>` +
-        actions +
-        `</article>`
-      );
-    })
-    .join(""),
+  `<p class="band-kicker">Start here</p>` +
+    `<div class="work-grid project-grid featured-grid">${featured.map(cardHtml).join("")}</div>` +
+    `<p class="band-kicker">Supporting</p>` +
+    `<div class="work-grid project-grid supporting-grid">${rest.map(cardHtml).join("")}</div>`,
 );
 
 /* ── platform ────────────────────────────────────────────────────────────── */
